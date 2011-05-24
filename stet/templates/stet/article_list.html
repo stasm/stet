@@ -1,0 +1,9 @@
+{# vim: set ft=htmldjango ts=2 sts=2 sw=2 et: #}
+{% extends "base.html" %}
+
+{% block content %}
+    {% for article in object_list %}
+        <h2>{{ article.title }}</h2>
+        {{ article.html|safe }}
+    {% endfor %}
+{% endblock %}

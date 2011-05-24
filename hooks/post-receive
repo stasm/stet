@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# The "post-receive" script is run after receive-pack has accepted a pack
+# and the repository has been updated.  It is passed arguments in through
+# stdin in the form
+#  <oldrev> <newrev> <refname>
+# For example:
+#  aa453216d1b3e49e7f6f98441fa56946ddcd6a20 68f7abf4e6f922807889f52bc043ecd31b79f814 refs/heads/master
+
+# Change this to match your setup
+ROOT="/path/project"
+
+# Optional path to a logfile
+LOG=""
+log() {
+    if [[ -n $LOG ]]; then
+        echo $1 >> $LOG
+    fi
+}
+
+BRANCH="master"
+MANAGE="$ROOT/manage.py"
+ENV="$ROOT/env"
+
+if [[ -n $ENV && -f "$ENV/bin/activate" ]]; then
+    source $ENV/bin/activate
+fi
+
+while read oldrev newrev refname; do
+    log "$oldrev, $newrev, $refname"
+    if [[ ${refname##refs/heads/} != $BRANCH ]]; then
+        continue
+    fi
+    for file in `git diff-tree --name-only $oldrev $newrev`; do
+        git show $newrev:$file | python $MANAGE update $file
+    done
+done
+
+if [[ -n $ENV ]]; then
+    deactivate
+fi
