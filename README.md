@@ -12,11 +12,15 @@ tagging and comments.
 Installation
 ------------
 
-1. Install `stet` with
+1. Install `stet`:
 
         pip install -e git+git://github.com/stasm/stet.git#egg=stet
 
-2. Add `stet` and the dependencies to `INSTALLED_APPS`
+1. Install the dependencies:
+
+        pip install -r https://github.com/stasm/stet/raw/master/requirements.txt
+
+1. Add `stet` and the dependencies to `INSTALLED_APPS`:
 
 
         INSTALLED_APPS = (
@@ -28,7 +32,7 @@ Installation
             'stet',
         )
 
-3. Enable the meta-data extension for Markdown by editing your settings.py file 
+1. Enable the meta-data extension for Markdown by editing your settings.py file 
    and adding the following setting:
 
         MARKDOWN_EXT = (
@@ -46,8 +50,8 @@ Installation
             'headerid',
         )
 
-4. Copy `hooks/post-receive` into the `hooks` directory of the remote 
+1. Copy `hooks/post-receive` into the `hooks` directory of the remote 
    repository in which you store your posts.
 
-5. Configure the `ROOT` variable in the `post-receive` hook to match the root of 
+1. Configure the `ROOT` variable in the `post-receive` hook to match the root of 
    your Django project (the directory in which `manage.py` is located).
