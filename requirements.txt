@@ -1,0 +1,2 @@
+Markdown >= 2.0.3
+django-taggit >= 0.9.3
