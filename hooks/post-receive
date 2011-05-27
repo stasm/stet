@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # The "post-receive" script is run after receive-pack has accepted a pack
 # and the repository has been updated.  It is passed arguments in through
@@ -31,9 +31,16 @@ while read oldrev newrev refname; do
     if [[ ${refname##refs/heads/} != $BRANCH ]]; then
         continue
     fi
-    for file in `git diff-tree --name-only $oldrev $newrev`; do
-        git show $newrev:$file | python $MANAGE update $file
-    done
+    while read status src dst; do
+        if [[ $status == D* ]]; then
+            python $MANAGE remove $src
+        elif [[ $status == [RC]* ]]; then
+            git show $newrev:$dst | python $MANAGE update $dst --replaces $src
+        else
+            # M or A
+            git show $newrev:$src | python $MANAGE update $src
+        fi
+    done < <(git diff-tree --name-status -M -r $oldrev $newrev)
 done
 
 if [[ -n $ENV ]]; then
