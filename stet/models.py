@@ -36,6 +36,7 @@ class Article(models.Model):
     html = models.TextField()
     pub_date = models.DateTimeField(blank=True, null=True)
     last_changed = models.DateTimeField(auto_now=True)
+    last_commit = models.CharField(max_length=40)
 
     objects = models.Manager()
     live = LiveManager()
@@ -44,9 +45,10 @@ class Article(models.Model):
     def __unicode__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
+    def save(self, commit=None, *args, **kwargs):
         md = Markdown(extensions=settings.MARKDOWN_EXT)
         self.html = md.convert(self.body)
+        self.last_commit = commit or ''
         m = md.Meta
         # process the metadata
         self.title = ' '.join(m.get('title', []))

@@ -10,6 +10,8 @@ class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option('--replaces', '-r', default=None, dest='oldname',
                     help='The name of the file this file replaced.'),
+        make_option('--commit', '-c', default=None, dest='commit',
+                    help='The hash of the commit of the change.'),
     )
 
     help = 'Record the new contents of a file called FILENAME in the ' \
@@ -34,6 +36,6 @@ class Command(BaseCommand):
                 sys.stdout.write('    ..previously called %s\n' % oldname)
                 article.filename = filename
         article.body = sys.stdin.read().decode('utf-8')
-        article.save()
+        article.save(options['commit'])
 
         sys.stdout.write('  ..done.\n')
