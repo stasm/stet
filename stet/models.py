@@ -54,7 +54,7 @@ class Article(models.Model):
         self.status = STATUS_CHOICES_DICT[m.get('status', ['live'])[0]]
 
         super(Article, self).save(*args, **kwargs)
-        self.tags.add(*m.get('tags', []))
+        self.tags.set(*m.get('tags', []))
 
     @property
     def status(self):
