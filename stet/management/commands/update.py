@@ -29,11 +29,11 @@ class Command(BaseCommand):
             article = Article(filename=filename)
             sys.stdout.write('  ..created a new article\n')
         else:
-            sys.stdout.write('  ..found an existing article\n')
+            sys.stdout.write('  ..found and updated an existing article\n')
             if oldname != filename:
                 sys.stdout.write('    ..previously called %s\n' % oldname)
                 article.filename = filename
-        article.body = sys.stdin.read()
+        article.body = sys.stdin.read().decode('utf-8')
         article.save()
 
         sys.stdout.write('  ..done.\n')
