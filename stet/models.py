@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from django.db import models
 from django.conf import settings
@@ -34,7 +34,7 @@ class Article(models.Model):
     # not user-editable fields
     filename = models.CharField(max_length=150, unique=True)
     html = models.TextField()
-    pub_date = models.DateField(blank=True, null=True)
+    pub_date = models.DateTimeField(blank=True, null=True)
     last_changed = models.DateTimeField(auto_now=True)
 
     objects = models.Manager()
@@ -67,5 +67,5 @@ class Article(models.Model):
     @status.setter
     def status(self, new):
         if self._status == DRAFT and new == LIVE:
-            self.pub_date = date.today()
+            self.pub_date = datetime.now()
         self._status = new

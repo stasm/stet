@@ -13,7 +13,7 @@
           <footer>
             Published:
             <time pubdate datetime="{{ article.pub_date.isoformat }}">
-              {{ article.pub_date }}
+              {{ article.pub_date.date }}
             </time>
             <a href="{{ article.get_absolute_url }}">permalink</a>
           </footer>
