@@ -4,11 +4,11 @@ from django.views.generic import ListView, DetailView
 from stet.models import Article
 
 urlpatterns = patterns('',
-    (r'^$', ListView.as_view(
+    url(r'^$', ListView.as_view(
         model=Article,
-    )),
-    (r'^(?P<pk>\d+)$', DetailView.as_view(
+    ), name='list'),
+    url(r'^(?P<pk>\d+)$', DetailView.as_view(
         model=Article,
-    )),
-    (r'^comments/', include('django.contrib.comments.urls')),
+    ), name='article'),
+    url(r'^comments/', include('django.contrib.comments.urls')),
 )

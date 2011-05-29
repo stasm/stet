@@ -1,0 +1,21 @@
+{# vim: set ft=htmldjango ts=2 sts=2 sw=2 et: #}
+{% load comments %}
+<form action="{% comment_form_target %}" method="post">{% csrf_token %}
+  <input type="hidden" name="next" value="{{ article.get_absolute_url }}">
+  {% for field in form %}
+    {% if field.is_hidden %}
+      <div>{{ field }}</div>
+    {% else %}
+      {% if field.errors %}{{ field.errors }}{% endif %}
+      <p
+        {% if field.errors %} class="error"{% endif %}
+        {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
+        {{ field.label_tag }} {{ field }}
+      </p>
+    {% endif %}
+  {% endfor %}
+  <p class="submit">
+    <input type="submit" name="post" class="submit-post" value="Post" />
+    <input type="submit" name="preview" class="submit-preview" value="Preview" />
+  </p>
+</form>

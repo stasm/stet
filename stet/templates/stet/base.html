@@ -1,0 +1,17 @@
+{# vim: set ft=htmldjango ts=2 sts=2 sw=2 et: #}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}
+        {% block subtitle %}{% endblock %}
+        &lt; Stet sample
+        {% endblock %}
+      </title>
+  </head>
+  <body>
+    <h1>Stet sample</h1>
+    {% block content %}{% endblock %}
+  </body>
+</html>

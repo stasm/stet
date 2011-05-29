@@ -56,6 +56,10 @@ class Article(models.Model):
         super(Article, self).save(*args, **kwargs)
         self.tags.set(*m.get('tags', []))
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('article', [str(self.id)])
+
     @property
     def status(self):
         return self._status

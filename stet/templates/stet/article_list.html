@@ -1,9 +1,41 @@
 {# vim: set ft=htmldjango ts=2 sts=2 sw=2 et: #}
-{% extends "base.html" %}
+{% extends "stet/base.html" %}
+{% load comments %}
 
 {% block content %}
     {% for article in object_list %}
-        <h2>{{ article.title }}</h2>
-        {{ article.html|safe }}
+      {% get_comment_count for article as comment_count %}
+
+      {% if forloop.first %}
+        {# the latest article is displayed in its full form #}
+        <article>
+          <h1>{{ article.title }}</h2>
+          <footer>
+            Published:
+            <time pubdate datetime="{{ article.pub_date.isoformat }}">
+              {{ article.pub_date }}
+            </time>
+            <a href="{{ article.get_absolute_url }}">permalink</a>
+          </footer>
+          {{ article.html|safe }}
+          <a href="{{ article.get_absolute_url }}#comments">
+            <p>Comments? ({{ comment_count }} so far)</p>
+          </a>
+        </article>
+
+      {% else %}
+        <article>
+          <h1>{{ article.title }}</h1>
+          <footer>
+            <time pubdate datetime="{{ article.pub_date.isoformat }}">
+              {{ article.pub_date }}
+            </time>
+          </footer>
+          <a href="{{ article.get_absolute_url }}">
+            <p>{{ article.excerpt }}</p>
+          </a>
+        </article>
+      {% endif %}
+
     {% endfor %}
 {% endblock %}

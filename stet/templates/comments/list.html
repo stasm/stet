@@ -1,0 +1,24 @@
+{# vim: set ft=htmldjango ts=2 sts=2 sw=2 et: #}
+<section id="comments">
+<h1>Comments</h1>
+{% for comment in comment_list %}
+  <article id="c{{ comment.id }}">
+    <p>{{ comment.comment }}</p>
+    <footer>
+      <address>
+        {% if comment.url %}
+          <a href="{{ comment.url }}">
+            {{ comment.name }}
+          </a>
+        {% else %}
+          {{ comment.name }}
+        {% endif %}
+      </address>
+      <time pubdate datetime="{{ comment.submit_date.isoformat }}">
+        {{ comment.submit_date }}
+      </time>
+      <a href="{{ article.get_absolute_url }}">#</a>
+    </footer>
+  </article>
+{% endfor %}
+</section>
