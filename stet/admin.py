@@ -11,7 +11,7 @@ class ArticleAdmin(admin.ModelAdmin):
         }),
         ('Meta', {
             'classes': ('collapse',),
-            'fields': ('tags', 'excerpt'),
+            'fields': ('tags', 'abstract'),
         }),
         ('Under the hood', {
             'classes': ('collapse',),

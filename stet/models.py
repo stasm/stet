@@ -27,7 +27,7 @@ class LiveManager(models.Manager):
 
 class Article(models.Model):
     title = models.CharField(max_length=150)
-    excerpt = models.TextField()
+    abstract = models.TextField(blank=True)
     body = models.TextField()
     _status = models.IntegerField(choices=STATUS_CHOICES, default=DRAFT)
 
@@ -50,7 +50,7 @@ class Article(models.Model):
         m = md.Meta
         # process the metadata
         self.title = ' '.join(m.get('title', []))
-        self.excerpt = ' '.join(m.get('excerpt', []))
+        self.abstract = ' '.join(m.get('abstract', []))
         self.status = STATUS_CHOICES_DICT[m.get('status', ['live'])[0]]
 
         super(Article, self).save(*args, **kwargs)
