@@ -20,16 +20,16 @@ Installation
 
         pip install -r https://github.com/stasm/stet/raw/master/requirements.txt
 
-1. Add `stet` and the dependencies to `INSTALLED_APPS`:
-
+1. Add `stet` and the dependencies to `INSTALLED_APPS`.  Make sure you list the 
+   dependencies _after_ `stet`:
 
         INSTALLED_APPS = (
 
             # ...your other apps go here...
 
+            'stet',
             'django.contrib.comments',
             'taggit',
-            'stet',
         )
 
 1. Enable the meta-data extension for Markdown by editing your settings.py file 
