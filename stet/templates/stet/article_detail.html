@@ -3,8 +3,21 @@
 {% load comments %}
 
 {% block content %}
-  <h2>{{ object.title }}</h2>
-  {{ object.html|safe }}
-  {% render_comment_list for object %}
-  {% render_comment_form for object %}
+  <article>
+    <h1>{{ object.title }}</h1>
+    <footer>
+      Published:
+      <time pubdate datetime="{{ object.pub_date.isoformat }}">
+        {{ object.pub_date.date }}
+      </time>
+      <a href="{{ object.get_absolute_url }}">permalink</a>
+    </footer>
+    {{ object.html|safe }}
+  </article>
+  <section id="comments">
+    {% render_comment_list for object %}
+    <section id="form">
+      {% render_comment_form for object %}
+    </section>
+  </section>
 {% endblock %}

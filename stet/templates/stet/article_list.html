@@ -9,7 +9,7 @@
       {% if forloop.first %}
         {# the latest article is displayed in its full form #}
         <article>
-          <h1>{{ article.title }}</h2>
+          <h1>{{ article.title }}</h1>
           <footer>
             Published:
             <time pubdate datetime="{{ article.pub_date.isoformat }}">
@@ -28,7 +28,7 @@
           <h1>{{ article.title }}</h1>
           <footer>
             <time pubdate datetime="{{ article.pub_date.isoformat }}">
-              {{ article.pub_date }}
+              {{ article.pub_date.date }}
             </time>
           </footer>
           <a href="{{ article.get_absolute_url }}">
