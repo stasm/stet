@@ -48,6 +48,7 @@ Installation
             'fenced_code',
             'footnotes',
             'headerid',
+            'downheader',
         )
 
 1. Copy `hooks/post-receive` into the `hooks` directory of the remote 

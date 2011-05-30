@@ -1,2 +1,5 @@
-Markdown >= 2.0.3
 django-taggit >= 0.9.3
+
+# markdown
+Markdown >= 2.0.3
+-e git://github.com/strange/mdx-downheader.git#egg=mdx_downheader
