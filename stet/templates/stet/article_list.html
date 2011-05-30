@@ -15,7 +15,8 @@
             <time pubdate datetime="{{ article.pub_date.isoformat }}">
               {{ article.pub_date.date }}
             </time>
-            <a href="{{ article.get_absolute_url }}">permalink</a>
+            <a href="{{ object.get_absolute_url }}">shortlink</a>
+            <a href="{{ object.get_long_url }}">longlink</a>
           </footer>
           {{ article.html|safe }}
           <a href="{{ article.get_absolute_url }}#comments">

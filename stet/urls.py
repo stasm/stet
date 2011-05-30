@@ -10,5 +10,8 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>\d+)$', DetailView.as_view(
         model=Article,
     ), name='article'),
+    url(r'^(?P<pk>\d+)/(?P<slug>[\w-]+)$', DetailView.as_view(
+        model=Article,
+    ), name='article_with_slug'),
     url(r'^comments/', include('django.contrib.comments.urls')),
 )

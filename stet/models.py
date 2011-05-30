@@ -2,8 +2,9 @@ from datetime import datetime
 
 from django.db import models
 from django.conf import settings
-from taggit.managers import TaggableManager
+from django.template.defaultfilters import slugify
 
+from taggit.managers import TaggableManager
 from markdown import Markdown
 
 
@@ -32,6 +33,7 @@ class Article(models.Model):
     _status = models.IntegerField(choices=STATUS_CHOICES, default=DRAFT)
 
     # not user-editable fields
+    slug = models.CharField(max_length=150)
     filename = models.CharField(max_length=150, unique=True)
     html = models.TextField()
     pub_date = models.DateTimeField(blank=True, null=True)
@@ -51,8 +53,12 @@ class Article(models.Model):
         self.last_commit = commit or ''
         m = md.Meta
         # process the metadata
-        self.title = ' '.join(m.get('title', []))
+        title = m.get('title', ['Untitled'])
+        self.title = ' '.join(title)
+        # slugify only the first line of the title
+        self.slug = slugify(title[0])
         self.abstract = ' '.join(m.get('abstract', []))
+        # no status means live
         self.status = STATUS_CHOICES_DICT[m.get('status', ['live'])[0]]
 
         super(Article, self).save(*args, **kwargs)
@@ -61,6 +67,10 @@ class Article(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('article', [str(self.id)])
+
+    @models.permalink
+    def get_long_url(self):
+        return ('article_with_slug', [str(self.id), self.slug])
 
     @property
     def status(self):
