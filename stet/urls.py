@@ -1,11 +1,12 @@
 from django.conf.urls.defaults import *
-from django.views.generic import ListView, DetailView
+from django.views.generic import ArchiveIndexView, DetailView
 
 from stet.models import Article
 
 urlpatterns = patterns('',
-    url(r'^$', ListView.as_view(
+    url(r'^$', ArchiveIndexView.as_view(
         model=Article,
+        date_field='pub_date'
     ), name='list'),
     url(r'^(?P<pk>\d+)$', DetailView.as_view(
         model=Article,
