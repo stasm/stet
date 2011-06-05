@@ -35,13 +35,11 @@ while read oldrev newrev refname; do
         if [[ $status == D* ]]; then
             python $MANAGE remove $src
         elif [[ $status == [RC]* ]]; then
-            git show $newrev:$dst | python $MANAGE update $dst \
-                                                   --replaces $src \
-                                                   --commit $newrev
+            git show $newrev:$dst | $MANAGE update $dst --commit $newrev \
+                                                        --replaces $src
         else
             # M or A
-            git show $newrev:$src | python $MANAGE update $src \
-                                                   --commit $newrev
+            git show $newrev:$src | $MANAGE update $src --commit $newrev
         fi
     done < <(git diff-tree --name-status -M -r $oldrev $newrev)
 done
