@@ -20,8 +20,9 @@ Installation
 
         pip install -r https://github.com/stasm/stet/raw/master/requirements.txt
 
-1. Add `stet` and the dependencies to `INSTALLED_APPS`.  Make sure you list the 
-   dependencies _after_ `stet`:
+1. Add `stet` and the dependencies to `INSTALLED_APPS`.  Make sure you list 
+   `django.contrib.comments` _after_ `stet`, or the templates will not work 
+   properly:
 
         INSTALLED_APPS = (
 
@@ -29,6 +30,7 @@ Installation
 
             'stet',
             'django.contrib.comments',
+            'django.contrib.sites',
             'taggit',
         )
 

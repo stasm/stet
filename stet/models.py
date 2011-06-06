@@ -23,7 +23,7 @@ STATUS_CHOICES_DICT = dict([(v, k) for k, v in STATUS_CHOICES])
 
 class LiveManager(models.Manager):
     def get_query_set(self):
-        return super(LiveManager, self).get_query_set().filter(status=LIVE)
+        return super(LiveManager, self).get_query_set().filter(_status=LIVE)
 
 
 class Article(models.Model):
@@ -43,6 +43,10 @@ class Article(models.Model):
     objects = models.Manager()
     live = LiveManager()
     tags = TaggableManager()
+
+    class Meta:
+        ordering = ('pub_date',)
+        get_latest_by = 'pub_date'
 
     def __unicode__(self):
         return self.title

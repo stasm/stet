@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 from django.views.generic import ArchiveIndexView, DetailView
 
 from stet.models import Article
+from stet.feeds import ArticleFeed
 
 urlpatterns = patterns('',
     url(r'^$', ArchiveIndexView.as_view(
@@ -14,5 +15,6 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>\d+)/(?P<slug>[\w-]+)$', DetailView.as_view(
         model=Article,
     ), name='article_with_slug'),
-    url(r'^comments/', include('django.contrib.comments.urls')),
+    (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^feed$', ArticleFeed()),
 )
