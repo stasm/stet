@@ -1,0 +1,47 @@
+{# vim: set ft=htmldjango ts=2 sts=2 sw=2 et: #}
+{% extends "stet/base.html" %}
+{% load comments %}
+
+{% block content %}
+    {% for article in object_list %}
+      {% get_comment_count for article as comment_count %}
+
+      {% if forloop.first %}
+        {# the latest article is displayed in its full form #}
+        <article>
+          <h1>{{ article.title }}</h1>
+          <footer>
+            Published:
+            <time pubdate datetime="{{ article.pub_date.isoformat }}">
+              {{ article.pub_date.date }}
+            </time>
+            <a href="{{ article.get_absolute_url }}">shortlink</a>
+            <a href="{{ article.get_long_url }}">longlink</a>
+          </footer>
+          {{ article.html|safe }}
+          <a href="{{ article.get_absolute_url }}#comments">
+            <p>Comments? ({{ comment_count }} so far)</p>
+          </a>
+        </article>
+
+      {% else %}
+        <article>
+          <h1>{{ article.title }}</h1>
+          <footer>
+            <time pubdate datetime="{{ article.pub_date.isoformat }}">
+              {{ article.pub_date.date }}
+            </time>
+          </footer>
+          <a href="{{ article.get_absolute_url }}">
+            <p>{{ article.abstract }}</p>
+          </a>
+        </article>
+      {% endif %}
+
+    {% endfor %}
+
+    <p>
+      <a href="{% url list page=page_obj.next_page_number %}">older writings</a>
+    </p>
+
+{% endblock %}

@@ -7,7 +7,14 @@ from stet.feeds import ArticleFeed, CommentsForArticleFeed
 urlpatterns = patterns('',
     url(r'^$', ArchiveIndexView.as_view(
         model=Article,
-        date_field='pub_date'
+        date_field='pub_date',
+        paginate_by=2,
+        template_name='stet/article_home.html'
+    ), name='index'),
+    url(r'^p/(?P<page>[0-9]+)$', ArchiveIndexView.as_view(
+        model=Article,
+        date_field='pub_date',
+        paginate_by=2
     ), name='list'),
     url(r'^(?P<pk>\d+)$', DetailView.as_view(
         model=Article,
